@@ -62,6 +62,7 @@ class Client
      */
     public function calc(): self
     {
+        $this->response = null;
         $requests = $this->getRequest()->toArray();
 
         foreach (array_chunk($requests, 10) as $requestsPart) {
