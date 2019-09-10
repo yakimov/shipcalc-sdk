@@ -1,0 +1,25 @@
+{
+    "name": "s25/shipcalc-sdk",
+    "description": "Calculate shipping rates, and get available service types and expected delivery time SDK for Shop25 shipping API",
+    "type": "library",
+    "require": {
+        "guzzlehttp/psr7": "^1.5",
+        "guzzlehttp/guzzle": "^6.3",
+        "ext-json": "*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vladimir Yakimov",
+            "email": "vovka@s25.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "S25\\ShipCalcSDK\\": "src/"
+        }
+    },
+    "scripts": {
+        "phpcs": "phpcs --standard=PSR2"
+    }
+}
