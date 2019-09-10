@@ -19,7 +19,7 @@ class Request
         $parameters = $this->extractInputParameters($parameters);
         foreach ($this->request as $request) {
             $result[] = array_map(static function ($parameter) use ($request, $name) {
-                $isPlace = ($parameter instanceof PlaceInterface);
+                 $isPlace = ($parameter instanceof PlaceInterface);
                 /** @var PlaceInterface $parameter | array | string */
                 return array_merge($request, [$name => $isPlace ? $parameter->toArray() : $parameter ]);
             }, $parameters);

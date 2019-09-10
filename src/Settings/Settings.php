@@ -4,8 +4,8 @@ namespace S25\ShipCalcSDK\Settings;
 
 class Settings
 {
-    protected $apiHost      = 'http://postcalc.s25.ru';
-    protected $apiUrl       = '/api/v1.0/calculate/';
+    protected $apiHost;
+    protected $apiUrl;
     protected $redisHost    = 'localhost';
     protected $redisPort    = 6379;
     protected $redisPass    = '';

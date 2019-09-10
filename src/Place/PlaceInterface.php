@@ -18,24 +18,35 @@ interface PlaceInterface
     /**
      * @return string
      */
-    public function getStateCode(): ?string;
+    public function getState(): ?string;
 
     /**
-     * @param mixed $stateCode
+     * @param mixed $state
      * @return PlaceInterface
      */
-    public function setStateCode(string $stateCode): PlaceInterface;
+    public function setState(string $state): PlaceInterface;
 
     /**
      * @return string
      */
-    public function getCityCode(): ?string;
+    public function getCity(): ?string;
 
     /**
-     * @param mixed $cityCode
+     * @param mixed $city
      * @return PlaceInterface
      */
-    public function setCityCode(string $cityCode): PlaceInterface;
+    public function setCity(string $city): PlaceInterface;
+
+    /**
+     * @return string
+     */
+    public function getZip(): ?string;
+
+    /**
+     * @param string $zip
+     * @return PlaceInterface
+     */
+    public function setZip(string $zip): PlaceInterface;
 
     /**
      * @return array

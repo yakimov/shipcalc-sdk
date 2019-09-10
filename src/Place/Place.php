@@ -5,8 +5,9 @@ namespace S25\ShipCalcSDK\Place;
 class Place implements PlaceInterface
 {
     protected $country;
-    protected $stateCode;
-    protected $cityCode;
+    protected $state;
+    protected $city;
+    protected $zip;
 
     public function getCountry(): string
     {
@@ -19,25 +20,36 @@ class Place implements PlaceInterface
         return $this;
     }
 
-    public function getStateCode(): ?string
+    public function getState(): ?string
     {
-        return $this->stateCode;
+        return $this->state;
     }
 
-    public function setStateCode(string $stateCode): PlaceInterface
+    public function setState(string $state): PlaceInterface
     {
-        $this->stateCode = $stateCode;
+        $this->state = $state;
         return $this;
     }
 
-    public function getCityCode(): ?string
+    public function getCity(): ?string
     {
-        return $this->cityCode;
+        return $this->city;
     }
 
-    public function setCityCode(string $cityCode): PlaceInterface
+    public function setCity(string $city): PlaceInterface
     {
-        $this->cityCode = $cityCode;
+        $this->city = $city;
+        return $this;
+    }
+
+    public function getZip(): ?string
+    {
+        return $this->zip;
+    }
+
+    public function setZip(string $zip): PlaceInterface
+    {
+        $this->zip = $zip;
         return $this;
     }
 
@@ -45,13 +57,18 @@ class Place implements PlaceInterface
     {
         $result['country'] = $this->getCountry();
 
-        if ($this->getStateCode()) {
-            $result['country'] = $this->getStateCode();
+        if ($this->getState()) {
+            $result['state'] = $this->getState();
         }
 
-        if ($this->getCityCode()) {
-            $result['city'] = $this->getCityCode();
+        if ($this->getCity()) {
+            $result['city'] = $this->getCity();
         }
+
+        if ($this->getZip()) {
+            $result['zip'] = $this->getZip();
+        }
+
         return $result;
     }
 }
