@@ -91,7 +91,7 @@ $to = array_map(static function ($destination) {
 }, $destinations);
 
 $settings = (new Settings())
-          ->setApiHost('http://postcalc.s25.ru')
+          ->setApiHost('http://host')
           ->setApiUrl('/api/v1.0/calculate/');
 
 $client = new Client($settings);
