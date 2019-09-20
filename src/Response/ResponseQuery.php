@@ -14,26 +14,38 @@ class ResponseQuery
     /**
      * @return array
      */
-    public function getCheapestShipping(): array
+    public function getArray(): array
     {
         $result = [];
         foreach ($this->response as $response) {
-            $lowPrice = null;
-            if (is_array($response['response'])) {
-                $lowPrice = array_reduce($response['response'], static function ($lowPrice, $price) {
-                    return (isset($price['price']) && $price['price'] < $lowPrice) ? $price['price'] : $lowPrice;
-                }, PHP_FLOAT_MAX);
-                $lowPrice = ($lowPrice === PHP_FLOAT_MAX) ? null : $lowPrice;
-            }
-
+            $countryFrom = $response['request']['source']['country'] ?? '';
+            $stateFrom = $response['request']['source']['state'] ?? '';
+            $zipFrom = $response['request']['source']['zip'] ?? '';
+            $countryTo = $response['request']['destination']['country'] ?? '';
+            $stateTo = $response['request']['destination']['state'] ?? '';
+            $zipTo = $response['request']['destination']['zip'] ?? '';
+            $currency = $response['request']['currency'];
             $weight = $response['request']['products'][0]['weight'];
+
             $key = sprintf(
-                '%s:%s:%s',
-                $response['request']['source']['country'],
-                $response['request']['destination']['country'],
-                $response['request']['currency']
+                '%s:%s:%s:%s:%s:%s:%s',
+                $countryFrom,
+                $stateFrom,
+                $zipFrom,
+                $countryTo,
+                $stateTo,
+                $zipTo,
+                $currency
             );
-            $result[$key] = [$weight => $lowPrice];
+
+            $deliveryList = [];
+            foreach ($response['response'] as $deliveryUid => $deliveryData) {
+                if (is_null($deliveryData)) {
+                    continue;
+                }
+                $deliveryList[$weight][$deliveryUid] = $deliveryData['price'];
+            }
+            $result[$key] = $deliveryList;
         }
         return $result;
     }
