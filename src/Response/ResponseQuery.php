@@ -19,21 +19,25 @@ class ResponseQuery
         $result = [];
         foreach ($this->response as $response) {
             $countryFrom = $response['request']['source']['country'] ?? '';
-            $stateFrom = $response['request']['source']['state'] ?? '';
-            $zipFrom = $response['request']['source']['zip'] ?? '';
-            $countryTo = $response['request']['destination']['country'] ?? '';
-            $stateTo = $response['request']['destination']['state'] ?? '';
-            $zipTo = $response['request']['destination']['zip'] ?? '';
-            $currency = $response['request']['currency'];
-            $weight = $response['request']['products'][0]['weight'];
+            $stateFrom   = $response['request']['source']['state'] ?? '';
+            $cityFrom    = $response['request']['source']['city'] ?? '';
+            $zipFrom     = $response['request']['source']['zip'] ?? '';
+            $countryTo   = $response['request']['destination']['country'] ?? '';
+            $stateTo     = $response['request']['destination']['state'] ?? '';
+            $cityTo      = $response['request']['destination']['city'] ?? '';
+            $zipTo       = $response['request']['destination']['zip'] ?? '';
+            $currency    = $response['request']['currency'];
+            $weight      = $response['request']['products'][0]['weight'];
 
             $key = sprintf(
-                '%s:%s:%s:%s:%s:%s:%s',
+                '%s:%s:%s:%s:%s:%s:%s:%s:%s',
                 $countryFrom,
                 $stateFrom,
+                $cityFrom,
                 $zipFrom,
                 $countryTo,
                 $stateTo,
+                $cityTo,
                 $zipTo,
                 $currency
             );
