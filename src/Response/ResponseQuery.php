@@ -30,7 +30,9 @@ class ResponseQuery
             $weight      = $response['request']['products'][0]['weight'];
 
             $key = sprintf(
-                '%s:%s:%s:%s:%s:%s:%s:%s:%s',
+                '%s|%s|%s:%s:%s:%s|%s:%s:%s:%s',
+                $weight,
+                $currency,
                 $countryFrom,
                 $stateFrom,
                 $cityFrom,
@@ -38,8 +40,7 @@ class ResponseQuery
                 $countryTo,
                 $stateTo,
                 $cityTo,
-                $zipTo,
-                $currency
+                $zipTo
             );
 
             $deliveryList = [];
@@ -47,9 +48,9 @@ class ResponseQuery
                 if (is_null($deliveryData)) {
                     continue;
                 }
-                $deliveryList[$weight][$deliveryUid] = $deliveryData['price'];
+                $deliveryList[$deliveryUid] = $deliveryData['price'];
             }
-            $result[$key] = $deliveryList;
+            $result[$key] = min($deliveryList);
         }
         return $result;
     }

@@ -23,7 +23,10 @@ class Client
 
         $this->httpClient  = new GuzzleHttpClient([
             'base_uri' => $settings->getApiHost(),
-            'headers'  => $this->getHeaders()
+            'headers'  => $this->getHeaders(),
+            'connect_timeout' => 10,
+            'read_timeout' => 60,
+            'timeout' => 10,
         ]);
     }
 
