@@ -12,17 +12,18 @@ $from = array_map(static function ($country) {
 
 $to = array_map(static function ($country) {
     return (new Place())->setCountry($country);
-}, ['AT', 'AU', 'AW', 'BE', 'CA', 'CH', 'CZ', 'DE', 'ES', 'FR', 'GB', 'IE', 'IL', 'IT', 'KR', 'NL', 'PL', 'SP', 'US']);
+}, ['AU', 'AT', 'BE', 'CA', 'CZ', 'FR', 'DE', 'IE', 'IL', 'IT', 'NL', 'PL', 'KR', 'ES', 'CH', 'GB', 'US']);
 
 $settings = (new Settings())
-          ->setApiHost('http://host')
+          ->setApiHost('http://localhost')
           ->setApiUrl('/api/v1.0/calculate/');
 
 $client = new Client($settings);
 $client->getRequest()->setFrom($from)
                   ->setTo($to)
-                  ->setCurrency('RUB', 'USD')
+                  ->setCurrency('USD')
                   ->setProduct((new SimpleProduct())->setWeight(1000));
 $client->calc();
 
-$result = $client->getResponse()->getResponseQuery()->getCheapestShipping();
+$result = $client->getResponseObject()->getResponse();
+print_r($result);

@@ -69,25 +69,24 @@ $destinations = [
 ];
 
 $from = (new Place())->setCountry('US')
-                   ->setZip('19720');
+    ->setZip('19720');
 
 $to = array_map(static function ($destination) {
     $zipCode = explode('-', $destination[2]);
     return (new Place())->setCountry($destination[0])
-                        ->setZip($zipCode[0]);
+        ->setZip($zipCode[0]);
 }, $destinations);
 
 $settings = (new Settings())
-          ->setApiHost('http://host')
-          ->setApiUrl('/api/v1.0/calculate/');
+    ->setApiHost('http://localhost')
+    ->setApiUrl('/api/v1.0/calculate/');
 
 $client = new Client($settings);
 $client->getRequest()->setFrom($from)
-                  ->setTo($to)
-                  ->setCurrency('RUB', 'USD')
-                  ->setProduct((new SimpleProduct())->setWeight(1000));
+    ->setTo($to)
+    ->setCurrency('USD')
+    ->setProduct((new SimpleProduct())->setWeight(3500));
 $client->calc();
 
-$result = $client->getResponse()->getResponseQuery()->getCheapestShipping();
-
-var_dump($result);
+$result = $client->getResponseObject()->getResponse();
+print_r($result);

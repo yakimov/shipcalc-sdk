@@ -4,10 +4,10 @@ namespace S25\ShipCalcSDK\Response;
 
 class Response
 {
-    protected $response;
-    protected $request;
+    protected array $request;
+    protected array $response;
 
-    public function __construct($request, $response)
+    public function __construct(array $request, array $response)
     {
         $this->request  = $request;
         $this->response = $response;
@@ -27,12 +27,25 @@ class Response
         }, $responseJson);
     }
 
+    /**
+     * @param array $request
+     * @return string
+     */
+    protected function generateKeyByRequest(array $request)
+    {
+        return sprintf('%s:%s:%s:%s:%s',
+                       $request['source']['country'],
+                       $request['source']['zip'] ?? '',
+                       $request['destination']['country'],
+                       $request['destination']['zip'] ?? '',
+                       $request['products'][0]['weight']);
+    }
+
     protected function mergeRequestToResponse(): void
     {
         $result = [];
         foreach ($this->request as $i => $request) {
-            $result[$i]['request']  = $request;
-            $result[$i]['response'] = $this->response[$i]['deliveries'];
+            $result[$this->generateKeyByRequest($request)] = $this->response[$i]['deliveries'] ?? null;
         }
         $this->response = $result;
     }
@@ -53,14 +66,6 @@ class Response
         $this->request  = array_merge($this->request, $response->getRequest());
 
         return $this;
-    }
-
-    /**
-     * @return ResponseQuery
-     */
-    public function getResponseQuery(): ResponseQuery
-    {
-        return new ResponseQuery($this->response);
     }
 
     /**

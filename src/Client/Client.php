@@ -12,8 +12,8 @@ use function GuzzleHttp\Promise\settle;
 class Client
 {
     /** @var Settings */
-    protected $settings;
-    protected $httpClient;
+    protected Settings $settings;
+    protected GuzzleHttpClient $httpClient;
     protected $request;
     protected $response;
 
@@ -52,7 +52,7 @@ class Client
     /**
      * @return Response
      */
-    public function getResponse(): Response
+    public function getResponseObject(): Response
     {
         if (!isset($this->response)) {
             throw new ResponseNotReadyException('Response is not ready');
