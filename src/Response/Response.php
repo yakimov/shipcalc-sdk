@@ -33,12 +33,13 @@ class Response
      */
     protected function generateKeyByRequest(array $request)
     {
-        return sprintf('%s:%s:%s:%s:%s',
+        return sprintf('%s:%s:%s:%s:%s:%s',
                        $request['source']['country'],
                        $request['source']['zip'] ?? '',
                        $request['destination']['country'],
                        $request['destination']['zip'] ?? '',
-                       $request['products'][0]['weight']);
+                       $request['products'][0]['weight'],
+                       $request['currency']);
     }
 
     protected function mergeRequestToResponse(): void
