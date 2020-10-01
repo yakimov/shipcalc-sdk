@@ -85,6 +85,12 @@ class Request
         return $this;
     }
 
+    public function setSite(string $site)
+    {
+        $this->setRequestParameter([$site], 'site');
+        return $this;
+    }
+
     /**
      * @return array
      */
