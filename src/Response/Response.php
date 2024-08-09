@@ -2,6 +2,8 @@
 
 namespace S25\ShipCalcSDK\Response;
 
+use Throwable;
+
 class Response
 {
     protected array $request;
@@ -17,14 +19,13 @@ class Response
 
     protected function prepareResponse(): void
     {
-        $responseJson = array_map(static function ($response) {
-            /** @var $response \GuzzleHttp\Psr7\Response [] */
-            return $response['state'] === 'fulfilled' ? (string) $response['value']->getBody() : false;
+        $this->response = array_map(static function ($response) {
+            try {
+                return json_decode($response->getBody()->getContents(), true);
+            } catch (Throwable $e) {
+                return false;
+            }
         }, $this->response);
-
-        $this->response = array_map(static function ($responseJson) {
-            return is_string($responseJson) ? json_decode($responseJson, true) : false;
-        }, $responseJson);
     }
 
     /**
